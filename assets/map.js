@@ -125,3 +125,22 @@ Game.Map.prototype.getRandomFloorPosition = function () {
     } while (!this.isEmptyFloor(x, y));
     return { x: x, y: y };
 }
+
+Game.Map.prototype.getEntitiesWithinRadius = function (centerX, centerY, radius) {
+    results = [];
+    // determine bounds;
+    var leftX = centerX - radius;
+    var rightX = centerX + radius;
+    var topY = centerY - radius;
+    var bottomY = centerY + radius;
+    // iterate through entities, adding any within bounds
+    for (var i = 0; i < this._entities.length; i++) {
+        if(this._entities[i].getX() >= leftX &&
+            this._entities[i].getX() <= rightX &&
+            this._entities[i].getY() >= topY &&
+            this._entities[i].getY() <= bottomY) {
+            results.push(this._entities[i]);
+        }
+    }
+    return results;
+}
